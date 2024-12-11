@@ -10,14 +10,17 @@
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
+         <!-- Polyline Measure CSS -->
+        <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+        <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
         <style>
-            #map { height: 180px; }
+            #map { height: 100vh; }
         </style>
     </head>
     <body>
         <div id="map"></div>
         <script>
-            var map = L.map('map').setView([51.505, -0.09], 13);
+            var map = L.map('map').setView([13.1771385413493, 78.1169943707051], 9);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -28,14 +31,38 @@
                 attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                 ext: 'png'
             }); 
-            var Esri_WorldPhysical = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}', {
-                attribution: 'Tiles &copy; Esri &mdash; Source: US National Park Service',
-                maxZoom: 8
+            var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
             });
             var mapLayer = {
                 "Stadia":Stadia_AlidadeSmoothDark,
-                "Esri World":Esri_WorldPhysical
+                "OpenStreet Hot":OpenStreetMap_HOT
             }
+            L.control.layers(mapLayer).addTo(map)
+            var crtlMeas = L.control.polylineMeasure({
+                position:'topleft',
+                measureControlTitle:"Measure Length"
+            }).addTo(map)
+
+            fetch('Trips.geojson')
+                .then(response => response.json())
+                .then(data => {
+                // Add GeoJSON layer to the map
+                L.geoJSON(data, {
+                    onEachFeature: function (feature, layer) {
+                    if (feature.properties && feature.properties.Places && feature.properties.Image) {
+                        // HTML content for the popup
+                        var popupContent = `
+                        <strong>${feature.properties.Places}</strong><br>
+                        <img src="${feature.properties.Image}" alt="${feature.properties.Places}" style="width:200px;height:auto;">
+                        `;
+                        layer.bindPopup(popupContent); // Add the popup with the Image
+                    }
+                    }
+                }).addTo(map);
+                })
+                .catch(err => console.error('Error loading GeoJSON:', err));
         </script>
     </body>
 </html>
