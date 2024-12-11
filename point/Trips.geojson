@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"name": "Trips",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "Places": "Charminar" }, "geometry": { "type": "Point", "coordinates": [ 78.474684027645438, 17.361695295829922 ] } },
+{ "type": "Feature", "properties": { "id": 2, "Places": "Makkah Masjid" }, "geometry": { "type": "Point", "coordinates": [ 78.473563582653355, 17.36050821347478 ] } },
+{ "type": "Feature", "properties": { "id": 3, "Places": "Ooty_Lake" }, "geometry": { "type": "Point", "coordinates": [ 76.689902697702266, 11.40474772762777 ] } },
+{ "type": "Feature", "properties": { "id": 4, "Places": "Karaikal_Beach" }, "geometry": { "type": "Point", "coordinates": [ 79.851163467129325, 10.914843459076893 ] } },
+{ "type": "Feature", "properties": { "id": 5, "Places": "SilentValleyView" }, "geometry": { "type": "Point", "coordinates": [ 77.42515957572202, 10.188239496706137 ] } },
+{ "type": "Feature", "properties": { "id": 6, "Places": "KodaikanalLakeView" }, "geometry": { "type": "Point", "coordinates": [ 77.488407491794803, 10.237830456965892 ] } },
+{ "type": "Feature", "properties": { "id": 7, "Places": "VagamonKerala" }, "geometry": { "type": "Point", "coordinates": [ 76.907558222760173, 9.689264471036685 ] } }
+]
+}
